@@ -15,7 +15,7 @@ android:
     - android-22
 
 script: "./gradlew clean build"
-after_script: "git tags"
+after_script: "git tag"
 
 deploy:
   provider: releases
@@ -24,5 +24,4 @@ deploy:
       - "app/build/outputs/apk/moledroid-debug.apk"
   skip_cleanup: true
   on:
-    branch: master
     tags: true
