@@ -9,13 +9,37 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
     buildTypes {
-        release {
+        //release {
+        //    zipAlignEnabled true
+        //    minifyEnabled true
+        //    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        //}
+
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+    }
+
+    applicationVariants.all { variant ->
+        def appName = parent.name
+        logger.info("App name: " + appName)
+        def newApkName
+
+        variant.outputs.each { output ->
+            if (output.zipAlign) {
+                newApkName = "${appName}-${output.baseName}.apk"
+            } else {
+                newApkName = "${appName}-${output.baseName}-unaligned.apk"
+            }
+            logger.info("New name: " + newApkName)
+            output.outputFile = new File(output.outputFile.parent, newApkName)
         }
     }
 }
+
+
 

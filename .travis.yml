@@ -15,3 +15,12 @@ android:
     - android-22
 
 script: "./gradlew clean build"
+
+deploy:
+  provider: releases
+  api_key: "$GH_KEY"
+  file:
+      - "app/build/outputs/apk/moledroid-debug.apk"
+  skip_cleanup: true
+  on:
+    branch: master
