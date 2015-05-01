@@ -15,7 +15,6 @@ android:
     - android-22
 
 script: "./gradlew clean build"
-after_script: "git tag"
 
 deploy:
   provider: releases
