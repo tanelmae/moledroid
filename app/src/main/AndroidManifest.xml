@@ -3,10 +3,9 @@
     package="io.github.tanelmae.moledroid" >
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:label="@string/app_name" >
         <activity
             android:name=".Switcher"
             android:label="@string/app_name" >

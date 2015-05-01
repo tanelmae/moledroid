@@ -1,21 +1,19 @@
 package io.github.tanelmae.moledroid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 
 
-public class Switcher extends ActionBarActivity {
+public class Switcher extends Activity {
     final String TAG = "moledroid";
 
     private static final String ANIMATION_PERMISSION = "android.permission.SET_ANIMATION_SCALE";
@@ -93,35 +91,5 @@ public class Switcher extends ActionBarActivity {
         } catch (RuntimeException re) {
             Log.w(TAG, "Cannot disable animations reflectively.", re);
         }
-    }
-
-    // To be removed:
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_switcher);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_switcher, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
