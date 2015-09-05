@@ -2,6 +2,7 @@ package io.github.tanelmae.moledroid;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
@@ -13,7 +14,7 @@ import java.lang.reflect.Method;
 import java.util.Set;
 
 
-public class Switcher extends Activity {
+public class Main extends Activity {
     final String TAG = "moledroid";
 
     private static final String ANIMATION_PERMISSION = "android.permission.SET_ANIMATION_SCALE";
@@ -31,9 +32,22 @@ public class Switcher extends Activity {
                 switchAnimations(Boolean.valueOf(extras.getString("ANIM")));
             } else if (params.contains("WIFI")){
                 switchWifi(Boolean.valueOf(extras.getString("WIFI")));
+            } else if (params.contains("SHARETEXT")) {
+                shareText(extras.getString("SHARETEXT"));
             }
+        } else {
+            Log.d(TAG, "no parameters given");
         }
         finish();
+    }
+
+    private void shareText(String content) {
+        Log.d(TAG, "sharing text: " + content);
+        Intent sendIntent = new Intent()
+                .setAction(Intent.ACTION_SEND)
+                .putExtra(Intent.EXTRA_TEXT, content)
+                .setType("text/plain");
+        startActivity(sendIntent);
     }
 
     private void switchWifi(boolean state) {
