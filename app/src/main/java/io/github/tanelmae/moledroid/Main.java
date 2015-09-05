@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.Bundle;
@@ -34,6 +35,12 @@ public class Main extends Activity {
                 switchWifi(Boolean.valueOf(extras.getString("WIFI")));
             } else if (params.contains("SHARETEXT")) {
                 shareText(extras.getString("SHARETEXT"));
+            } else if (params.contains("SHAREIMG")) {
+                shareMedia("image/*",extras.getString("SHAREIMG"));
+            } else if (params.contains("SHAREVIDEO")) {
+                shareMedia("video/*", extras.getString("SHAREVIDEO"));
+            } else if (params.contains("SHAREAUDIO")) {
+                shareMedia("audio/*", extras.getString("SHAREAUDIO"));
             }
         } else {
             Log.d(TAG, "no parameters given");
@@ -46,8 +53,16 @@ public class Main extends Activity {
         Intent sendIntent = new Intent()
                 .setAction(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_TEXT, content)
-                .setType("text/plain");
+                .setType("text/*");
         startActivity(sendIntent);
+    }
+
+    private void shareMedia(String type, String uri) {
+        Intent shareIntent = new Intent()
+                .setAction(Intent.ACTION_SEND)
+                .putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + uri))
+                .setType(type);
+        startActivity(shareIntent);
     }
 
     private void switchWifi(boolean state) {
