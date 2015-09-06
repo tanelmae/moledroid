@@ -1,6 +1,10 @@
 #Moledroid
 Convenience tool for contorlling Android test devices
 
+Share text example:
+``` adb shell am start -W -n io.github.tanelmae.moledroid/io.github.tanelmae.moledroid.Main --esn SHARE -e EXTRA_TEXT "See this!" -e TYPE "text/plain" ```
+Supported extras: EXTRAS_TEXT, EXTRAS_HTML_TEXT, EXTRA_STREAM, TYPE
+
 [![Build Status](https://travis-ci.org/tanelmae/moledroid.svg?branch=master)](https://travis-ci.org/tanelmae/moledroid)
 
 ###To be able to switch animations on/off:

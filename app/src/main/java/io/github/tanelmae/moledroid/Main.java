@@ -31,37 +31,36 @@ public class Main extends Activity {
 
             if (params.contains("ANIM")){
                 switchAnimations(Boolean.valueOf(extras.getString("ANIM")));
-            } else if (params.contains("WIFI")){
+            } else if (params.contains("WIFI")) {
                 switchWifi(Boolean.valueOf(extras.getString("WIFI")));
-            } else if (params.contains("SHARETEXT")) {
-                shareText(extras.getString("SHARETEXT"));
-            } else if (params.contains("SHAREIMG")) {
-                shareMedia("image/*",extras.getString("SHAREIMG"));
-            } else if (params.contains("SHAREVIDEO")) {
-                shareMedia("video/*", extras.getString("SHAREVIDEO"));
-            } else if (params.contains("SHAREAUDIO")) {
-                shareMedia("audio/*", extras.getString("SHAREAUDIO"));
+            } else if (params.contains("SHARE")) {
+                shareContent(params, extras);
             }
-        } else {
+           } else {
             Log.d(TAG, "no parameters given");
         }
         finish();
     }
 
-    private void shareText(String content) {
-        Log.d(TAG, "sharing text: " + content);
-        Intent sendIntent = new Intent()
-                .setAction(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_TEXT, content)
-                .setType("text/*");
-        startActivity(sendIntent);
-    }
-
-    private void shareMedia(String type, String uri) {
+    private void shareContent(Set params, Bundle extras) {
         Intent shareIntent = new Intent()
                 .setAction(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + uri))
-                .setType(type);
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (params.contains("TYPE")) {
+            shareIntent.setType(extras.getString("TYPE"));
+        }
+        if (params.contains("EXTRA_TEXT")) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, extras.getString("EXTRA_TEXT"));
+        }
+        if (params.contains("EXTRA_STREAM")) {
+            shareIntent.putExtra(Intent.EXTRA_STREAM,
+                    Uri.parse(extras.getString("URI")));
+        }
+        if (params.contains("EXTRA_HTML_TEXT")) {
+            shareIntent.putExtra(Intent.EXTRA_HTML_TEXT, extras.getString("EXTRA_HTML_TEXT"));
+        }
         startActivity(shareIntent);
     }
 
